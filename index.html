@@ -59,7 +59,6 @@
         .search-container {
             width: 100%;
             margin-top: 1rem;
-            transition: var(--transition);
         }
         
         #search-input {
@@ -69,33 +68,6 @@
             border-radius: 4px;
             font-size: 1rem;
             box-shadow: var(--shadow);
-        }
-        
-        .search-toggle {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background-color: var(--accent-color);
-            border-radius: 50%;
-            box-shadow: var(--shadow);
-            z-index: 101;
-            cursor: pointer;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-        
-        .search-toggle:hover {
-            transform: scale(1.05);
-        }
-        
-        .search-toggle svg {
-            width: 24px;
-            height: 24px;
-            fill: white;
         }
         
         main {
@@ -260,36 +232,6 @@
             }
         }
         
-        @media (max-width: 767px) {
-            .search-container {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                background-color: white;
-                padding: 1rem;
-                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-                transform: translateY(100%);
-                z-index: 99;
-            }
-            
-            .search-container.active {
-                transform: translateY(0);
-            }
-            
-            .search-toggle {
-                display: flex;
-            }
-            
-            .header-content {
-                justify-content: center;
-            }
-            
-            h1 {
-                text-align: center;
-            }
-        }
-        
         .loading {
             display: flex;
             justify-content: center;
@@ -305,7 +247,7 @@
         <div class="container">
             <div class="header-content">
                 <h1>Карл Брюллов: Галерея картин</h1>
-                <div class="search-container" id="search-container">
+                <div class="search-container">
                     <input type="text" id="search-input" placeholder="Поиск по названию картины...">
                 </div>
             </div>
@@ -319,12 +261,6 @@
             </div>
         </div>
     </main>
-    
-    <div class="search-toggle" id="search-toggle">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-        </svg>
-    </div>
     
     <div class="modal" id="painting-modal">
         <div class="modal-content">
@@ -939,12 +875,6 @@
             );
         }
 
-        // Функция для переключения видимости поиска на мобильных устройствах
-        function toggleSearch() {
-            const searchContainer = document.getElementById('search-container');
-            searchContainer.classList.toggle('active');
-        }
-
         // Инициализация при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
             // Отображаем все картины при загрузке
@@ -965,22 +895,6 @@
             document.getElementById('painting-modal').addEventListener('click', function(e) {
                 if (e.target === this) {
                     this.style.display = 'none';
-                }
-            });
-            
-            // Обработчик для кнопки поиска на мобильных устройствах
-            document.getElementById('search-toggle').addEventListener('click', toggleSearch);
-            
-            // Закрытие поиска при клике вне его на мобильных устройствах
-            document.addEventListener('click', function(e) {
-                const searchContainer = document.getElementById('search-container');
-                const searchToggle = document.getElementById('search-toggle');
-                
-                if (window.innerWidth <= 767 && 
-                    searchContainer.classList.contains('active') && 
-                    !searchContainer.contains(e.target) && 
-                    !searchToggle.contains(e.target)) {
-                    searchContainer.classList.remove('active');
                 }
             });
             
